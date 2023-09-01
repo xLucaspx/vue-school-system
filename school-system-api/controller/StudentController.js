@@ -35,18 +35,46 @@ class StudentController {
       const students = await studentServices.getStudents({
         name: { [Op.like]: `%${name}%` },
       });
-      
+
       return res.status(200).json(students);
     } catch (error) {
       return res.status(error.status || 500).json({ error: error.message });
     }
   }
 
-  // static async createStudent(req, res) {}
+  static async createStudent(req, res) {
+    const student = req.body;
 
-  // static async updateStudent(req, res) {}
+    try {
+      const newStudent = await studentServices.createStudent(student);
+      return res.status(201).json(newStudent);
+    } catch (error) {
+      return res.status(error.status || 500).json({ error: error.message });
+    }
+  }
 
-  // static async deleteStudent(req, res) {}
+  static async updateStudent(req, res) {
+    const { id } = req.params;
+    const data = req.body;
+
+    try {
+      const updatedStudent = await studentServices.updateStudent(id, data);
+      return res.status(200).json(updatedStudent);
+    } catch (error) {
+      return res.status(error.status || 500).json({ error: error.message });
+    }
+  }
+
+  static async deleteStudent(req, res) {
+    const { id } = req.params;
+
+    try {
+      await studentServices.deleteStudent(id);
+      return res.status(204).json({});
+    } catch (error) {
+      return res.status(error.status || 500).json({ error: error.message });
+    }
+  }
 }
 
 module.exports = StudentController;
