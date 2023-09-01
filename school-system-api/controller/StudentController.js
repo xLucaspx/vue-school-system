@@ -1,3 +1,5 @@
+const { Op } = require("sequelize");
+const { BadRequestError } = require("../errors");
 const StudentServices = require("../services/StudentServices");
 
 const studentServices = new StudentServices();
@@ -27,7 +29,13 @@ class StudentController {
     const { name } = req.query;
 
     try {
-      const students = await studentServices.getStudents({ name });
+      if (!name)
+        throw new BadRequestError("Missing student name in the query!");
+
+      const students = await studentServices.getStudents({
+        name: { [Op.like]: `%${name}%` },
+      });
+      
       return res.status(200).json(students);
     } catch (error) {
       return res.status(error.status || 500).json({ error: error.message });

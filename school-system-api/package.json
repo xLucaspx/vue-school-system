@@ -4,11 +4,11 @@
   "description": "backend for school system project",
   "main": "index.js",
   "scripts": {
-    "start": "node --watch index.js",
-    "test": "node --test test/",
+    "start": "npx nodemon index.js",
+    "test": "npx cross-env NODE_ENV=test node --test test/",
     "migrate": "npx sequelize db:migrate",
     "seed": "npx sequelize db:seed:all",
-    "migrate-and-seed": "npm run db:migrate && npm run db:seed"
+    "migrate-and-seed": "npm run migrate && npm run seed"
   },
   "author": "Lucas da Paz",
   "license": "ISC",
@@ -19,5 +19,10 @@
     "mysql2": "^3.6.0",
     "sequelize": "^6.32.1",
     "sequelize-cli": "^6.6.1"
+  },
+  "devDependencies": {
+    "c8": "^8.0.1",
+    "cross-env": "^7.0.3",
+    "nodemon": "^3.0.1"
   }
 }

@@ -12,9 +12,7 @@ class StudentServices {
       return await db[this.modelName].findAll({ where: { ...where } });
     } catch (error) {
       if (error instanceof DatabaseError)
-        throw new BadRequestError(
-          `Invalid where clause:\n${Object.keys(where)}`
-        );
+        throw new BadRequestError("Invalid where clause!");
 
       throw error;
     }
@@ -26,12 +24,10 @@ class StudentServices {
 
       if (student) return student;
 
-      throw new NotFoundError(`Student not found for:\n${where}`);
+      throw new NotFoundError("Student not found!");
     } catch (error) {
       if (error instanceof DatabaseError)
-        throw new BadRequestError(
-          `Invalid where clause:\n${Object.keys(where)}`
-        );
+        throw new BadRequestError("Invalid where clause!");
 
       throw error;
     }
